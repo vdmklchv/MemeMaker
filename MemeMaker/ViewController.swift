@@ -19,16 +19,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomCaptionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        topCaptionSegmentedControl.removeAllSegments()
-        for choice in topChoices {
-            topCaptionSegmentedControl.insertSegment(withTitle: choice.emoji, at: topChoices.count, animated: false)
-        }
-        topCaptionSegmentedControl.selectedSegmentIndex = 0
-        bottomCaptionSegmentedControl.removeAllSegments()
-        for choice in bottomChoices {
-            bottomCaptionSegmentedControl.insertSegment(withTitle: choice.emoji, at: bottomChoices.count, animated: false)
-        }
-        bottomCaptionSegmentedControl.selectedSegmentIndex = 0
+        populateSegmentedControl(for: topCaptionSegmentedControl)
+        populateSegmentedControl(for: bottomCaptionSegmentedControl)
         chooseCaption(for: topChoices)
         chooseCaption(for: bottomChoices)
     }
@@ -44,6 +36,20 @@ class ViewController: UIViewController {
         } else {
             bottomCaptionLabel.text = bottomChoices[bottomCaptionSegmentedControl.selectedSegmentIndex].caption
         }
+    }
+    
+    func populateSegmentedControl(for segmentedControl: UISegmentedControl) {
+        segmentedControl.removeAllSegments()
+        let choiceArray: [CaptionOption]
+        if segmentedControl == topCaptionSegmentedControl {
+            choiceArray = topChoices
+        } else {
+            choiceArray = bottomChoices
+        }
+        for choice in choiceArray {
+            segmentedControl.insertSegment(withTitle: choice.emoji, at: choiceArray.count, animated: false)
+        }
+        segmentedControl.selectedSegmentIndex = 0
     }
     
     
